@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f1e9"><title>Econova — Navro‘z ko‘chasi</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three.module.js","three/addons/controls/OrbitControls.js":"/vendor/OrbitControls.js"}}</script>
+</head>
+<body>
+  <main id="world" aria-label="Navro‘z ko‘chasi, interaktiv 3D shahar"><div id="scene"></div><div id="sceneFailure" hidden>3D ko‘rinish bu qurilmada ishlamadi. Barcha amallar «Joylar» ro‘yxatida mavjud.</div></main>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Econova bosh sahifa"><span class="brand-logo">e<i></i></span><span>econova<small>O‘Z SHAHRING. O‘Z QARORING.</small></span></a>
+    <div class="city-pill"><span class="status-dot"></span><span>1-maktab <b>Navro‘z ko‘chasi</b></span><span class="pill-divider"></span><span id="connection">Ulanmoqda…</span></div>
+    <button class="wallet-pill" id="profileButton"><span class="wallet-symbol">◈</span><span><small>Shaxsiy hamyon</small><strong id="wallet">—</strong></span><span id="avatar">?</span></button>
+  </header>
+  <section class="street-heading" aria-label="Shahar haqida"><div class="eyebrow"><i></i> BIRINCHI KO‘CHA <span>01</span></div><h1>Katta g‘oyalar<br>shu yerdan boshlanadi.</h1><p id="streetCaption">Bir joy. Bir hamkor. Birinchi haqiqiy qaroring.</p><span class="practice-label">Mahalliy mashq shahri · P0</span></section>
+  <div class="street-label"><span>NAVRO‘Z KO‘CHASI</span><small>TOSHKENT · O‘QUV SHAHRI</small></div>
+  <aside class="mission-card" id="missionCard"><div class="mission-top"><span class="step-tag" id="missionStep">01 / 05</span><span>BUGUNGI IMKONIYAT</span><i>↗</i></div><h2 id="missionTitle">Birinchi biznesingni och</h2><p id="missionText">Bo‘sh ustaxona seni kutmoqda. Do‘sting bilan mablag‘ qo‘shib, birga ish boshlang.</p><button class="primary" id="missionAction">Ustaxonani ko‘rish <span>→</span></button><div class="mission-footer"><span class="small-dot"></span><span id="missionFooter">Har bir qarorning o‘z hikoyasi bor.</span></div></aside>
+  <div class="map-tools"><button id="locations" aria-label="Joylar ro‘yxati" title="Joylar ro‘yxati">☷</button><button id="rotate" aria-label="Kamerani 180 daraja aylantirish" title="Orqa tomonni ko‘rish">↻</button><button id="homeCamera" aria-label="Kamerani boshlang‘ich joyiga qaytarish" title="Uyga qaytish">⌂</button><button id="settingsButton" aria-label="Grafika sozlamalari" title="Grafika sozlamalari">⚙</button></div>
+  <div class="camera-hint"><span>↔</span> Tortib aylantir <i>·</i> G‘ildirak bilan yaqinlash <i>·</i> Binoni tanla</div>
+  <nav class="bottom-nav" aria-label="Asosiy navigatsiya">
+    <button data-tab="city" class="active"><svg viewBox="0 0 24 24"><path d="M3 21V8l6-3v16M9 21V3l7 3v15M16 21V11l5-2v12M1 21h22M5 10v2m0 3v2m7-9v2m0 3v2m0 3v1m7-6v2"/></svg><span>Shahar</span></button>
+    <button data-tab="company"><svg viewBox="0 0 24 24"><path d="M3 21V7l9-4 9 4v14M3 10h18M7 21v-7h10v7M1 21h22M9 7h6"/></svg><span>Kompaniyam</span></button>
+    <button data-tab="market"><svg viewBox="0 0 24 24"><path d="M3 9l2-6h14l2 6M3 9v3h18V9M5 12v9h14v-9M9 21v-6h6v6M8 3l-1 9m9-9 1 9M12 3v9"/></svg><span>Bozor</span></button>
+    <button data-tab="lab"><svg viewBox="0 0 24 24"><path d="M8 3h8M10 3v7L4 20q0 1 2 1h12q2 0 2-1l-6-10V3M7 15h10"/></svg><span>Laboratoriya</span></button>
+  </nav>
+  <section id="panel" class="panel" hidden aria-label="Boshqaruv paneli"><header><div><span class="eyebrow" id="panelEyebrow">NAVRO‘Z KO‘CHASI</span><h2 id="panelTitle">Ustaxona</h2></div><button id="closePanel" class="icon-button" aria-label="Panelni yopish">×</button></header><div class="panel-content" id="panelContent"></div></section>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="loginModal" aria-labelledby="loginTitle"><div class="login-art"><span class="brand-logo">e<i></i></span><span>SHU YERDA BOSHLANADI</span><h2 id="loginTitle">Shahringga<br>xush kelibsan.</h2><p>Do‘sting bilan biznes och.<br>Qaroringning natijasini ko‘r.</p><div class="login-skyline"><i></i><i></i><i></i><i></i><i></i></div></div><div class="login-form"><div class="eyebrow">BIRINCHI KO‘CHA · MASHQ</div><h3>Kim bo‘lib kirasan?</h3><p>Uchta alohida sinov hisobi. Har biri 15 mln virtual so‘m bilan boshlaydi.</p><form id="loginForm"><label>Ishtirokchi<select name="user" id="loginUser"><option value="aziza">Aziza · hamkor A</option><option value="bekzod">Bekzod · hamkor B</option><option value="camila">Camila · xaridor C</option></select></label><label>Sinov paroli<input name="password" id="loginPassword" type="password" autocomplete="current-password" value="econova-demo" required></label><small class="demo-password">Mashq paroli: <code>econova-demo</code></small><button type="submit" class="primary">Shaharga kirish <span>→</span></button><p id="loginError" role="alert"></p></form><small class="login-note">Haqiqiy pul ishlatilmaydi. Bu hisoblar mahalliy sinov uchun. Birgalikda sinash uchun alohida brauzer profillari yoki maxfiy oynadan foydalaning.</small></div></dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

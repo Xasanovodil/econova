@@ -1,1 +1,21 @@
-{"name":"econova","version":"1.0.0","private":true,"scripts":{"dev":"node server.js","start":"node server.js","test":"node --test"}}
+{
+  "name": "econova",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Econova — shared Uzbek economics street, P0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test economy.test.js tests/*.test.js",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}
