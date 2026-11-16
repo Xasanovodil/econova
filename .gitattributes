@@ -1,2 +1,4 @@
 * text=auto
 *.cmd text eol=crlf
+# Preserve checksum-verified upstream JavaScript byte-for-byte.
+public/vendor/*.js -whitespace
