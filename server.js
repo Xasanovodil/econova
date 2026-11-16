@@ -51,10 +51,10 @@ function createApp({dbPath=process.env.ECONOVA_DB || path.join(__dirname,'data',
       const routes={
         '/':'public/index.html','/index.html':'public/index.html',
         '/app.js':'public/app.js','/style.css':'public/style.css','/city.js':'public/city.js',
-        '/vendor/three.module.js':'node_modules/three/build/three.module.js',
-        '/vendor/three.core.js':'node_modules/three/build/three.core.js',
-        '/vendor/OrbitControls.js':'node_modules/three/examples/jsm/controls/OrbitControls.js',
-        '/vendor/BufferGeometryUtils.js':'node_modules/three/examples/jsm/utils/BufferGeometryUtils.js',
+        '/vendor/three.module.js':'public/vendor/three.module.js',
+        '/vendor/three.core.js':'public/vendor/three.core.js',
+        '/vendor/OrbitControls.js':'public/vendor/OrbitControls.js',
+        '/vendor/BufferGeometryUtils.js':'public/vendor/BufferGeometryUtils.js',
         '/legacy/':'legacy/index.html','/legacy/index.html':'legacy/index.html',
         '/legacy/app.js':'legacy/app.js','/legacy/style.css':'legacy/style.css','/legacy/economy.js':'legacy/economy.js'
       };

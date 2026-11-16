@@ -12,10 +12,8 @@
     "test": "node --test economy.test.js tests/*.test.js",
     "test:browser": "node tests/browser.cjs"
   },
-  "dependencies": {
-    "three": "0.187.0"
-  },
   "devDependencies": {
-    "playwright": "1.65.1"
+    "playwright": "1.65.1",
+    "three": "0.187.0"
   }
 }

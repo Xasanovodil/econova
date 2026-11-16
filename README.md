@@ -9,18 +9,17 @@ A shared Uzbek economics game in a navigable 3D street. Two players found and ru
 1. Install **Node.js 24 or later** from https://nodejs.org/en/download.
 2. Download the repository ZIP and choose **Extract all**.
 3. In the extracted folder, double-click **START_ECONOVA.cmd**.
-4. The launcher installs the locked runtime dependency on first use, starts the server, and opens the browser. Keep its console open. Ctrl+C stops it.
+4. The launcher starts the server and opens the browser. The 3D library is included in the ZIP; no npm installation or internet connection is needed after Node.js is installed. Keep its console open. Ctrl+C stops it.
 
 Opening `index.html` directly shows these instructions and a link to the preserved old game. The new shared economy requires the server.
 
 ## Terminal
 
 ```sh
-npm ci
-npm start
+node server.js
 ```
 
-Open `http://localhost:3000`. The default bind is `127.0.0.1`. `PORT` changes the port; `ECONOVA_DB` selects the database path. The default database is `data/econova.sqlite`, ignored by Git. Node 24 includes the SQLite runtime; a separate database installation is unnecessary. Assets are served locally after installation; no external API or LLM credential is required.
+Open `http://localhost:3000`. The default bind is `127.0.0.1`. `PORT` changes the port; `ECONOVA_DB` selects the database path. The default database is `data/econova.sqlite`, ignored by Git. Node 24 includes the SQLite runtime; a separate database installation is unnecessary. The verified Three.js files and MIT license are bundled in `public/vendor/`; no external API or LLM credential is required.
 
 Use the existing checkout. Cloud tasks are isolated; do not create a worktree unless requested.
 
@@ -55,15 +54,18 @@ The street shows booked cars and completed jobs from server state. Rotate the ca
 - A server timer settles due shifts while browsers are closed. P0 uses a documented practice mapping: one shift every three real hours while the server is running. The visible practice action advances one shift immediately. The school calendar, quiet hours, inactive-manager mode and general simulation clock belong to P1.
 - The server must remain running to process time continuously. A stopped server resumes due work after restart. P0 is a finite six-booking scenario, not an endless demand simulation.
 
-## Tests
+## Development and tests
 
 ```sh
+npm ci
 npm test
 npx playwright install chromium
 npm run test:browser
 ```
 
 On Linux the browser test uses `/usr/bin/chromium` if available; `CHROMIUM_PATH` can select an installed browser. On Windows/macOS it uses Playwright's installed Chromium. The browser suite creates an isolated temporary database and three independent contexts; it does not touch your saved city. Captures and a JSON report are generated in `test-results/`.
+
+Development dependencies are only needed to run the browser tests or refresh the bundled library. `public/vendor/manifest.json` records the pinned package archive integrity and each bundled file hash.
 
 See [P0 validation](docs/P0_VALIDATION.md) for observed results and [architecture](docs/ARCHITECTURE.md) for scope and invariants.
 

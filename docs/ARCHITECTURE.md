@@ -24,4 +24,4 @@ The P0 server uses a finite practice calendar. General calendars, quiet hours, b
 
 ## Art and dependencies
 
-All models, signs, roads, trees, vehicle geometry and CSS in this repository are original procedural assets made for Econova. There are no downloaded model or texture assets. Three.js and Playwright versions and integrity hashes are in `package-lock.json`; their MIT and Apache-2.0 licenses respectively ship in installed packages. System fonts are used; no font request leaves the app. Realism and phone performance need further art and device validation.
+All models, signs, roads, trees, vehicle geometry and CSS in this repository are original procedural assets made for Econova. There are no downloaded model or texture assets. Three.js and Playwright versions and integrity hashes are in `package-lock.json`; the bundled Three.js MIT license and checksum manifest are in `public/vendor/`. Playwright is a development-only Apache-2.0 dependency. Playing the exported project does not require `node_modules` or npm. System fonts are used; no font request leaves the app. Realism and phone performance need further art and device validation.

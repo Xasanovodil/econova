@@ -1,12 +1,15 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
-const {mkdtempSync,rmSync,mkdirSync,existsSync,writeFileSync}=require('node:fs');
+const {mkdtempSync,rmSync,mkdirSync,existsSync,writeFileSync,cpSync}=require('node:fs');
 const {tmpdir}=require('node:os');
 const {join}=require('node:path');
-const {createApp}=require('../server');
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
  const dir=mkdtempSync(join(tmpdir(),'econova-browser-'));
+ const exported=join(dir,'econova-main (1)','econova-main');mkdirSync(exported,{recursive:true});
+ for(const name of ['server.js','lib','public','legacy'])cpSync(join(__dirname,'..',name),join(exported,name),{recursive:true});
+ assert.equal(existsSync(join(exported,'node_modules')),false);
+ const {createApp}=require(join(exported,'server.js'));
  const app=createApp({dbPath:join(dir,'e2e.sqlite')});await new Promise(r=>app.server.listen(0,'127.0.0.1',r));
  const url='http://127.0.0.1:'+app.server.address().port;
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:existsSync('/usr/bin/chromium')?{executablePath:'/usr/bin/chromium'}:{}),args:['--no-sandbox']});
@@ -42,8 +45,8 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
   await fallbackContext.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){if(type.startsWith('webgl'))return null;return original.call(this,type,...args);};});
   const fallback=await fallbackContext.newPage();await login(fallback,'camila');assert.equal(await fallback.locator('#sceneFailure').isVisible(),true);await fallback.locator('#locations').click();await fallback.locator('[data-open="company"]').click();assert.match(await fallback.locator('#panelTitle').textContent(),/Navro‘z/);await fallbackContext.close();
   assert.deepEqual(errors,[]);const diagnostics=await a.evaluate(()=>window.econovaSceneDiagnostics());
-  writeFileSync('test-results/browser-report.json',JSON.stringify({passed:true,checked:['three independent authenticated sessions','shared founding and workshop changes','6 completed jobs and exact profit','two seller signatures','12m sale with 7.2m/4.8m payouts','old owner permissions removed','session and ownership survive reload','180-degree geometry view','3D building picking','no-WebGL location list','390px mobile overflow','panel scrolling preserves camera','low graphics and reduced motion','lab isolation'],diagnostics,browser:await browser.version(),pageErrors:errors,console:logs},null,2));
-  console.log('PASS: three-session P0 flow, six jobs, exact payouts, ownership, reload, geometry rotation, mobile, low graphics, laboratory.');console.log(JSON.stringify(diagnostics));
+  writeFileSync('test-results/browser-report.json',JSON.stringify({passed:true,checked:['clean export without node_modules or npm installation','three independent authenticated sessions','shared founding and workshop changes','6 completed jobs and exact profit','two seller signatures','12m sale with 7.2m/4.8m payouts','old owner permissions removed','session and ownership survive reload','180-degree geometry view','3D building picking','no-WebGL location list','390px mobile overflow','panel scrolling preserves camera','low graphics and reduced motion','lab isolation'],diagnostics,browser:await browser.version(),pageErrors:errors,console:logs},null,2));
+  console.log('PASS: clean exported app, three-session P0 flow, six jobs, exact payouts, ownership, reload, geometry rotation, mobile, low graphics, laboratory.');console.log(JSON.stringify(diagnostics));
  }catch(e){for(const context of browser.contexts())for(const page of context.pages()){await page.screenshot({path:'test-results/failure-'+browser.contexts().indexOf(context)+'.png'}).catch(()=>{});}console.error('Browser errors:',errors);console.error('Console:',logs.slice(-12));throw e;}
  finally{await browser.close();await app.close();rmSync(dir,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1;});

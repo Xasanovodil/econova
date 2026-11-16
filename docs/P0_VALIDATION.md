@@ -4,7 +4,7 @@ Validation environment: Node.js 24.19.0 on Linux; Chromium 154.0.8037.57 through
 
 ## Automated results
 
-- `npm test`: 32 passing tests (four retained prototype-rule checks, 24 P0 domain/database checks and four HTTP/concurrency checks).
+- `npm test`: 32 gameplay and API tests passed in the P0 run; an additional clean-export startup check now passes (33 total checks in the suite).
 - `npm run test:browser`: complete P0 acceptance flow passes through the actual UI. There are no uncaught browser page errors.
 - JavaScript syntax checks and Git whitespace checks pass.
 
@@ -28,4 +28,4 @@ The test runner regenerates all images and the detailed JSON report under `test-
 
 These are browser and local-server checks, not real-device Telegram tests. Chrome's software renderer reports GPU readback stalls during screenshots. The renderer is capped at 30 redraws per second and pauses rendering when the camera and scene are idle; an idle redraw rate is not a device performance benchmark. Real phone FPS, battery impact, Telegram safe-area/back behavior, production roster authentication and load at 30 participants/2,000 residents have not been measured.
 
-The Windows launcher has been reviewed but not executed on Windows in this Linux environment. Its underlying install/start commands are exercised here. Actual shared play is verified across isolated browser sessions connected to one running server; no public multiplayer deployment has been made. Generic bank lending, a second subcontractor company, general resident demand and the later 35-industry catalog are outside this first implementation.
+The Windows launcher has been reviewed but not executed on Windows in this Linux environment. It now runs Node directly with no npm installation. A clean exported copy in a path containing spaces and parentheses was tested without `node_modules` or a lockfile: startup, login and all bundled module checksums pass. The three-player browser flow also runs against that clean export. Bundled Three.js files were verified against the pinned archive’s SHA-512 integrity before copying, and a SHA-256 file manifest is included. Actual shared play is verified across isolated browser sessions connected to one running server; no public multiplayer deployment has been made. Generic bank lending, a second subcontractor company, general resident demand and the later 35-industry catalog are outside this first implementation.
